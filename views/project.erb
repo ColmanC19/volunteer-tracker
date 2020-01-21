@@ -1,7 +1,7 @@
 <h4>Project Title: <%= @project.title %></h4>
 <h5> ID: <%= @project.id %></h5>
 
-<h1>Volunteers for this project:  <%= @project.title %></h1>
+<h1>Volunteers on this project:  <%= @project.title %></h1>
 
 <% if @volunteers %>
 <ul>
@@ -10,9 +10,9 @@
   <% end %>
 </ul>
 <% else %>
-<p>There are currently no volunteers for this project</p>
+<p>There are currently no volunteers listed on this project</p>
 <% end %>
 
 
-<p><a href="/home/projects/<%= @project.id %>/edit">Edit Project Name</a></p>
+<p><a href="/home/projects/<%= @project.id %>/edit">Edit Project Title</a></p>
 <a href="/home">Return to Home</a>
