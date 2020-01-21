@@ -1,0 +1,38 @@
+<h1>Volunteer Tracker</h1>
+
+<h3>Here are the list of Projects:</h3>
+
+<% if @projects %>
+<ul>
+  <% @projects.each do |project| %>
+  <li><a href="/home/project/<%= project.id %>"><strong><%= project.title %></strong> </li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p>There are currently no Projects to display.</p>
+  <% end %>
+
+
+
+  <h3>Here are the list of Volunteers:</h3>
+
+  <% if @volunteers %>
+  <ul>
+    <% @volunteers.each do |volunteer| %>
+    <li><a href="/home/volunteers/<%= volunteer.id %>"><strong><%= volunteer.name %></strong> </li>
+      <% end %>
+    </ul>
+    <% else %>
+    <p>There are currently no Volunteers</p>
+    <% end %>
+
+
+
+
+
+
+      <a href="/project/new">Add a new Project</a>
+      </br>
+      </br>
+
+      <a href="/volunteer/new">Add a new Volunteer</a>
