@@ -5,16 +5,17 @@ require('spec_helper')
 
 Capybara.app = Sinatra::Application
 set(:show_exceptions, false)
-#
-# Your project should be set up so that a volunteer can only be created if a project already exists. (This makes it easier to assign the one to many relationship in Sinatra.) Focus on getting one integration spec passing at a time.
 
+# Your project should be set up so that a volunteer can only be created if a project already exists. (This makes it easier to assign the one to many relationship in Sinatra.) Focus on getting one integration spec passing at a time.
+#
 # The user should be able to visit the home page and fill out a form to add a new project. When that project is created, the application should direct them back to the homepage.
 
 describe 'the project creation path', {:type => :feature} do
   it 'takes the user to the homepage where they can create a project' do
     visit '/'
+    click_link('Add a new Project')
     fill_in('title', :with => 'Teaching Kids to Code')
-    click_button('Create Project')
+    click_button('Add the project')
     expect(page).to have_content('Teaching Kids to Code')
   end
 end
@@ -27,9 +28,9 @@ describe 'the project update path', {:type => :feature} do
     test_project.save
     visit '/'
     click_link('Teaching Kids to Code')
-    click_link('Edit Project')
+    click_link('Edit Project Title')
     fill_in('title', :with => 'Teaching Ruby to Kids')
-    click_button('Update Project')
+    click_button('Rename Project')
     expect(page).to have_content('Teaching Ruby to Kids')
   end
 end
@@ -41,14 +42,14 @@ describe 'the project delete path', {:type => :feature} do
     test_project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
     test_project.save
     id = test_project.id
-    visit "/projects/#{id}/edit"
+    visit "/home/projects/#{id}/edit"
     click_button('Delete Project')
     visit '/'
     expect(page).not_to have_content("Teaching Kids to Code")
   end
 end
 
-# The user should be able to click on a project detail page and see a list of all volunteers working on that project. The user should be able to click on a volunteer to see the volunteer's detail page.
+# The user should be able to click on a project detail page and see a list of all volunteers working on that project. The user should be able to click on a volunteer to see the volunteer's detail page. This test includes CRUD functionalyt for Volunteers when it said explicitly in the project reqs we didn't need to do this. modified the test accordingly
 
 describe 'the volunteer detail page path', {:type => :feature} do
   it 'shows a volunteer detail page' do
@@ -57,10 +58,11 @@ describe 'the volunteer detail page path', {:type => :feature} do
     project_id = test_project.id.to_i
     test_volunteer = Volunteer.new({:name => 'Jasmine', :project_id => project_id, :id => nil})
     test_volunteer.save
-    visit "/projects/#{project_id}"
+    visit "/home/project/#{project_id}"
     click_link('Jasmine')
+    click_link('Edit/Delete Volunteer')
     fill_in('name', :with => 'Jane')
-    click_button('Update Volunteer')
+    click_button('Rename Volunteer')
     expect(page).to have_content('Jane')
   end
 end
